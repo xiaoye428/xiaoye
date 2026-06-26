@@ -32,8 +32,6 @@ export default async function handler(req, res) {
       return res.status(response.status).json({ error: data });
     }
 
-    console.log("DeepSeek OK:", data);
-
     return res.status(200).json(data);
 
   } catch (error) {
