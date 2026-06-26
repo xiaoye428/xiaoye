@@ -53,7 +53,7 @@ async function rewrite() {
 
     const data = await res.json();
 
-    // 👇关键修复：必须取 content
+    // 
     resultBox.innerText =
       data.choices?.[0]?.message?.content || JSON.stringify(data);
 
