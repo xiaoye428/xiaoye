@@ -10,11 +10,11 @@ body{
   margin:40px auto;
   padding:0 20px;
   font-family:Arial;
-  background:#f7f7f7;
+  background:#f6f6f6;
 }
 
 .box{
-  background:#fff;
+  background:white;
   padding:20px;
   border-radius:12px;
   box-shadow:0 4px 12px rgba(0,0,0,0.1);
@@ -33,7 +33,7 @@ button{
   margin-top:10px;
   padding:12px 20px;
   background:#007bff;
-  color:#fff;
+  color:white;
   border:none;
   border-radius:8px;
   cursor:pointer;
@@ -45,11 +45,7 @@ button{
   background:#f1f1f1;
   border-radius:8px;
   min-height:80px;
-}
-
-.tg{
-  margin-top:20px;
-  text-align:center;
+  white-space:pre-wrap;
 }
 </style>
 </head>
@@ -64,10 +60,6 @@ button{
   <button onclick="rewrite()">Paraphrase</button>
 
   <div class="result" id="result"></div>
-</div>
-
-<div class="tg">
-  Unlimited version (optional upgrade)
 </div>
 
 <script>
@@ -91,7 +83,7 @@ async function rewrite() {
         messages: [
           {
             role: "user",
-            content: "Rewrite this text in a better way: " + text
+            content: "Paraphrase this text: " + text
           }
         ]
       })
@@ -99,9 +91,10 @@ async function rewrite() {
 
     const data = await res.json();
 
+    // ✅ 核心修复点（解决 [object Object]）
     const output =
-      data.choices?.[0]?.message?.content ||
-      data.error ||
+      data?.choices?.[0]?.message?.content ||
+      data?.error ||
       "No response";
 
     document.getElementById("result").innerText = output;
