@@ -3,75 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <title>Free AI Paraphraser</title>
-
 <style>
-body{
-  max-width:800px;
-  margin:40px auto;
-  padding:0 20px;
-  font-family:Arial;
-  background:#f6f6f6;
-}
-
-.box{
-  background:white;
-  padding:20px;
-  border-radius:12px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.1);
-}
-
-textarea{
-  width:100%;
-  height:180px;
-  padding:12px;
-  margin-top:10px;
-  border:1px solid #ddd;
-  border-radius:8px;
-}
-
-button{
-  margin-top:10px;
-  padding:12px 20px;
-  background:#007bff;
-  color:white;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-.result{
-  margin-top:15px;
-  padding:12px;
-  background:#f1f1f1;
-  border-radius:8px;
-  min-height:80px;
-  white-space:pre-wrap;
-}
+body{font-family:Arial;max-width:800px;margin:40px auto;background:#f5f5f5}
+.box{background:white;padding:20px;border-radius:10px}
+textarea{width:100%;height:160px;padding:10px}
+button{padding:10px 20px;background:#007bff;color:white;border:0;border-radius:6px;cursor:pointer}
+.result{margin-top:20px;background:#eee;padding:10px;min-height:80px}
 </style>
 </head>
 
 <body>
-
 <div class="box">
-  <h2>Free AI Paraphraser</h2>
+<h2>Free AI Paraphraser</h2>
 
-  <textarea id="input" placeholder="Enter text..."></textarea>
+<textarea id="input" placeholder="Enter text..."></textarea>
 
-  <button onclick="rewrite()">Paraphrase</button>
+<button onclick="rewrite()">Paraphrase</button>
 
-  <div class="result" id="result"></div>
+<div class="result" id="result"></div>
 </div>
 
 <script>
 async function rewrite() {
   const text = document.getElementById("input").value;
+  const resultBox = document.getElementById("result");
 
   if (!text) {
-    alert("Please enter text");
+    alert("请输入内容");
     return;
   }
 
-  document.getElementById("result").innerText = "Processing...";
+  resultBox.innerText = "Processing...";
 
   try {
     const res = await fetch("/api/chat", {
@@ -90,20 +52,3 @@ async function rewrite() {
     });
 
     const data = await res.json();
-
-    // ✅ 核心修复点（解决 [object Object]）
-    const output =
-      data?.choices?.[0]?.message?.content ||
-      data?.error ||
-      "No response";
-
-    document.getElementById("result").innerText = output;
-
-  } catch (err) {
-    document.getElementById("result").innerText = "Error: " + err.message;
-  }
-}
-</script>
-
-</body>
-</html>
